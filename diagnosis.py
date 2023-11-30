@@ -1,10 +1,11 @@
-import numpy as np
 import pandas as pd
 import sys
 import os.path
 
 from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import GaussianNB
+from sklearn.model_selection import KFold
+from sklearn.naive_bayes import CategoricalNB
+from sklearn.model_selection import cross_val_score
 
 TEST_SIZE = 0.4
 
@@ -22,6 +23,15 @@ def main():
     # print results
     print(f'Correct: {(y_test == predictions).sum()}')
     print(f'Incorrect: {(y_test != predictions).sum()}')
+
+    kfold = KFold(n_splits=10, shuffle=True, random_state=50)
+    DS_train = cross_val_score(model, X_train, Y_train, cv=kfold, scoring='accuracy')
+    pd.DataFrame(DS_train,columns=['Scores'])
+    print(f'Training Accuracy: {(DS_train.mean()*100.0):.2f}%')
+
+    DS_test = cross_val_score(model, x_test, y_test, cv=kfold, scoring='accuracy')
+    pd.DataFrame(DS_test,columns=['Scores'])
+    print(f'Testing Accuracy: {(DS_test.mean()*100.0):.2f}%')
 
 
 def load_data(directory):
@@ -62,10 +72,12 @@ def load_data(directory):
 
     return (evidence, labels)
 
+
 def train_model(evidence, labels):
     '''train model using naive bayes classifier'''
-    model = GaussianNB()
+    model = CategoricalNB()
     return model.fit(evidence, labels)
+
 
 if __name__ == '__main__':
     main()

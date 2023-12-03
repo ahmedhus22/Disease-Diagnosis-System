@@ -38,6 +38,7 @@ def load_data(directory):
     '''
     load data from a dataset csv file into a list of symptoms and diseases.
     return a tuple(evidence, labels)
+    dataset taken from kaggle: https://www.kaggle.com/datasets/itachi9604/disease-symptom-description-dataset/data
     '''
     df = pd.read_csv(directory + os.path.sep + 'dataset.csv')
 

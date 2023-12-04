@@ -11,7 +11,7 @@ TEST_SIZE = 0.4
 
 def main():
     if len(sys.argv) != 2:
-        sys.exit('Usage:python diagnosis.py directory')
+        sys.exit('Usage:python diagnosis_model.py directory')
 
     evidence, label = load_data(sys.argv[1])
     X_train, x_test, Y_train, y_test = train_test_split(

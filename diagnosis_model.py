@@ -1,6 +1,7 @@
 import pandas as pd
 import sys
 import os.path
+from joblib import dump, load
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
@@ -32,6 +33,8 @@ def main():
     DS_test = cross_val_score(model, x_test, y_test, cv=kfold, scoring='accuracy')
     pd.DataFrame(DS_test,columns=['Scores'])
     print(f'Testing Accuracy: {(DS_test.mean()*100.0):.2f}%')
+
+    save(model)
 
 
 def load_data(directory):
@@ -78,6 +81,28 @@ def train_model(evidence, labels):
     '''train model using naive bayes classifier'''
     model = CategoricalNB()
     return model.fit(evidence, labels)
+
+
+def save(model):
+    if not os.path.exists('model.joblib'):
+        dump(model, 'model.joblib')
+
+
+def predict_diagnosis(model, x, df_s):
+    '''
+    returns a possible diagnosis for some input x
+    x should have 17 features ex:['shivering', 'chills', 0, 0, 0 .... (15 0's)]
+    '''
+    x = pd.Series(x)
+    x = x.fillna(0)
+
+    # df_s = pd.read_csv(directory + os.path.sep + 'Symptom-severity.csv')
+    symptoms = df_s['Symptom']
+    for i in range(len(symptoms)):
+        weight = df_s['weight'][i]
+        x = x.replace(symptoms[i], weight)
+    x = x.values.reshape(1, -1)
+    return model.predict(x)[0]
 
 
 if __name__ == '__main__':

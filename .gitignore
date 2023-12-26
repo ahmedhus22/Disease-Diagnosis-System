@@ -161,3 +161,6 @@ cython_debug/
 
 # macstuff
 .DS_Store
+
+# model persistence
+*.joblib

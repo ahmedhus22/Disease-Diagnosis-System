@@ -1,18 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Diseases(models.Model):
+class Disease(models.Model):
     disease = models.CharField(max_length=100)
     patient = models.ForeignKey(User, on_delete=models.CASCADE)
     date_modified = models.DateTimeField(auto_now=True)
 
 
-class Symptoms(models.Model):
-    disease = models.ForeignKey(Diseases, on_delete=models.CASCADE)
+class Symptom(models.Model):
+    disease = models.ForeignKey(Disease, on_delete=models.CASCADE)
     symptom = models.CharField(max_length=50)
 
 
-class Specialists(models.Model):
+class Specialist(models.Model):
     DISEASES_CHOICES = [
         ('Fu', 'Fungal infection'),
         ('All', 'Allergy'),

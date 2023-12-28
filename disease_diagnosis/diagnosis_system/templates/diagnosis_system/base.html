@@ -30,8 +30,21 @@
                   </div>
                   <!-- Navbar Right Side -->
                   <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="#">Login</a>
-                    <a class="nav-item nav-link" href="#">Register</a>
+                    {% if user.is_authenticated %}
+                      <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                      <form id="logout" method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <a class="nav-item nav-link" href="#" onclick="log_out()">Logout</a>
+                      </form>
+                      <script>
+                        function log_out() {
+                          document.getElementById("logout").submit()
+                        }
+                      </script>
+                    {% else %}
+                      <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                      <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                    {% endif %}
                   </div>
                 </div>
               </div>

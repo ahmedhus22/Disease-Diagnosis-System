@@ -8,3 +8,17 @@
     x = x.values.reshape(1, -1)
     print(loaded_model.predict(x))
 '''
+
+'''
+class UserType(models.Model):
+    PATIENT = 1
+    DOCTOR = 2
+
+    USER_CHOICES = [
+        (PATIENT, 'Patient'),
+        (DOCTOR, 'Doctor')
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_type = models.PositiveSmallIntegerField(choices=USER_CHOICES)
+'''

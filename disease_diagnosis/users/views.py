@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from .forms import UserRegisterForm
 from django.contrib import messages
+from django.conf import settings
+
+User = settings.AUTH_USER_MODEL
 
 def register(request):
     if request.method =='POST':

@@ -37,6 +37,13 @@
               </div>
             </nav>
           </header>
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ messages.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
         {% block content %}{% endblock %}
         <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

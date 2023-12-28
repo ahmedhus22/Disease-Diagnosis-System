@@ -1,11 +1,12 @@
 {% extends "diagnosis_system/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
     <div class="centered">
         <form method="POST">
             {% csrf_token %}
             <formset class="form-group">
                 <legend class="border-bottom mb-4">Register</legend>
-                {{ form.as_p }}
+                {{ form|crispy }}
             </formset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Sign Up</button>

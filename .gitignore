@@ -164,3 +164,6 @@ cython_debug/
 
 # model persistence
 *.joblib
+
+# static media files
+media/

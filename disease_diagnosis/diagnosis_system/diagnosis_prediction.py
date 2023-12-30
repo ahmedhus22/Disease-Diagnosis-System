@@ -1,6 +1,7 @@
 import pandas as pd
 import sys
 import os.path
+from pathlib import Path
 from joblib import dump, load
 
 from sklearn.model_selection import train_test_split
@@ -8,7 +9,10 @@ from sklearn.model_selection import KFold
 from sklearn.naive_bayes import CategoricalNB
 from sklearn.model_selection import cross_val_score
 
+from disease_diagnosis.settings import BASE_DIR
+
 TEST_SIZE = 0.4
+FEATURES_SIZE = 17
 
 def main():
     if len(sys.argv) != 2:
@@ -92,15 +96,25 @@ def save(model):
         dump(model, 'model.joblib')
 
 
-def predict_diagnosis(model, x, df_s):
+def predict_diagnosis(x):
     '''
     returns a possible diagnosis for some input x
     x should have 17 features ex:['shivering', 'chills', 0, 0, 0 .... (15 0's)]
     '''
-    x = pd.Series(x)
+    x_vector = [i for i in range(FEATURES_SIZE)]
+    for i in range(FEATURES_SIZE):
+        if i < len(x):
+            x_vector[i] = x[i]
+        else:
+            x_vector[i] = 0
+    model = load('model.joblib')
+    x = pd.Series(x_vector)
     x = x.fillna(0)
 
-    # df_s = pd.read_csv(directory + os.path.sep + 'Symptom-severity.csv')
+    # read Symptom-severity
+    df_s = pd.read_csv(Path(BASE_DIR, 'diagnosis_system', 'dataset', 'Symptom-severity.csv'))
+    df_s['Symptom'] = df_s['Symptom'].str.replace('_', ' ')
+
     symptoms = df_s['Symptom']
     for i in range(len(symptoms)):
         weight = df_s['weight'][i]

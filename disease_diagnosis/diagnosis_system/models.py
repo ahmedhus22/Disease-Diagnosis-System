@@ -60,3 +60,7 @@ class Specialist(models.Model):
     specialist = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0, editable=False)
 
+'''
+class SymptomChoices(models.Model):
+    symptom_choice = models.ForeignKey(Symptom, on_delete=models.SET_NULL, null=True)
+'''

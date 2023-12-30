@@ -46,6 +46,9 @@ def load_data(directory):
     df = pd.read_csv(directory + os.path.sep + 'dataset.csv')
 
     # clean the data: fix labels and remove null
+    for col in df.columns:
+        df[col] = df[col].str.replace('_',' ')
+
     cols = df.columns
     data = df[cols].to_numpy().flatten()
 
@@ -59,6 +62,7 @@ def load_data(directory):
 
     # read Symptom-severity
     df_s = pd.read_csv(directory + os.path.sep + 'Symptom-severity.csv')
+    df_s['Symptom'] = df_s['Symptom'].str.replace('_', ' ')
 
     # replace symptom name with severity
     symptoms = df_s['Symptom']
@@ -67,9 +71,9 @@ def load_data(directory):
         df = df.replace(symptoms[i], weight)
 
     # replace 0 for values not in Symptom-severity(unknown severity)
-    df = df.replace('dischromic _patches', 0)
-    df = df.replace('spotting_ urination', 0)
-    df = df.replace('foul_smell_of urine', 0)
+    df = df.replace('dischromic  patches', 0)
+    df = df.replace('spotting  urination', 0)
+    df = df.replace('foul smell of urine', 0)
 
     evidence = df.iloc[:,1:].values
     labels = df['Disease'].values

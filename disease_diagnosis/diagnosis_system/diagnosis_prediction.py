@@ -101,6 +101,9 @@ def predict_diagnosis(x):
     returns a possible diagnosis for some input x
     x should have 17 features ex:['shivering', 'chills', 0, 0, 0 .... (15 0's)]
     '''
+    additional_message = ''
+    if len(x) < 2:
+        additional_message = 'Enter more Symptoms to receive accurate diagnosis'
     x_vector = [i for i in range(FEATURES_SIZE)]
     for i in range(FEATURES_SIZE):
         if i < len(x):
@@ -114,13 +117,17 @@ def predict_diagnosis(x):
     # read Symptom-severity
     df_s = pd.read_csv(Path(BASE_DIR, 'diagnosis_system', 'dataset', 'Symptom-severity.csv'))
     df_s['Symptom'] = df_s['Symptom'].str.replace('_', ' ')
+    symptoms_list = df_s['Symptom'].unique()
+    for i in range(len(x)):
+        if x[i] not in symptoms_list:
+            x[i] = 0
 
     symptoms = df_s['Symptom']
     for i in range(len(symptoms)):
         weight = df_s['weight'][i]
         x = x.replace(symptoms[i], weight)
     x = x.values.reshape(1, -1)
-    return model.predict(x)[0]
+    return model.predict(x)[0], additional_message
 
 
 if __name__ == '__main__':

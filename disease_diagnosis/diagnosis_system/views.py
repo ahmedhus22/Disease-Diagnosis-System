@@ -16,11 +16,12 @@ def diagnosis_predict(request):
             cd = form.cleaned_data
             symptoms = cd.get('symptoms')
             symptoms_list = symptoms.split(', ')
-            # TODO validate input
-            diagnosis = predict_diagnosis(symptoms_list)
+
+            diagnosis, additional_message = predict_diagnosis(symptoms_list)
             context = {
                 'diagnosis': diagnosis,
-                'symptoms_list': symptoms_list
+                'symptoms_list': symptoms_list,
+                'additional_message': additional_message
             }
             return render(request, 'diagnosis_system/diagnosis.html', context=context)
 

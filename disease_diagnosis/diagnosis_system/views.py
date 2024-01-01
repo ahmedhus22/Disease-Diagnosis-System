@@ -1,7 +1,7 @@
-from django.shortcuts import render
-from .models import Disease, Symptom, Specialist
+from django.shortcuts import render, redirect
+from .models import Patient, Symptom, Specialist
 from django.views.generic import CreateView
-from .forms import SymptomChoicesForm
+from .forms import SymptomChoicesForm, PatientUpdateForm
 from .diagnosis_prediction import predict_diagnosis, disease_description, disease_precaution
 from users.models import Profile
 
@@ -50,3 +50,29 @@ def diagnosis_predict(request):
 
 def diagnosis(request):
     return render(request, 'diagnosis_system/diagnosis.html')
+
+
+def patient_update(request):
+    if request.method == 'POST':
+        form = PatientUpdateForm(request.POST , request.FILES, instance=request.user.patient)
+        if form.is_valid:
+            form.save()
+            # messages.success(request, f'Your Account has been updated!')
+            return redirect('patient-update')
+        
+    else:
+        form = PatientUpdateForm(instance=request.user.patient)
+
+    context = {
+        'form': form 
+    }
+    return render(request, 'diagnosis_system/patient_form.html', context)
+
+
+class DiagnosisCreateView(CreateView):
+    model = Patient
+    fields = ['disease', 'symptom1', 'symptom2', 'symptom3', 'symptom4']
+
+    def form_valid(self, form):
+        form.instance.patient = self.request.user
+        return super().form_valid(form)

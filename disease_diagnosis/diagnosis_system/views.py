@@ -68,11 +68,3 @@ def patient_update(request):
     }
     return render(request, 'diagnosis_system/patient_form.html', context)
 
-
-class DiagnosisCreateView(CreateView):
-    model = Patient
-    fields = ['disease', 'symptom1', 'symptom2', 'symptom3', 'symptom4']
-
-    def form_valid(self, form):
-        form.instance.patient = self.request.user
-        return super().form_valid(form)

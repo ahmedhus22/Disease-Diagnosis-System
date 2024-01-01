@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django_jsonform.models.fields import JSONField
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -14,6 +15,59 @@ class Profile(models.Model):
         (DOCTOR, 'Doctor')
     ]
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, null=True)
+    rating = models.IntegerField(default=0, editable=False)
+
+    SPECIALITIES_SCHEMA = {
+        'type': 'array',
+        'items': {
+            'type': 'string',
+            'choices': [
+                'Fungal infection',
+                'Allergy',
+                'GERD',
+                'Chronic cholestasis',
+                'Drug Reaction',
+                'Peptic ulcer diseae',
+                'AIDS',
+                'Diabetes',
+                'Gastroenteritis',
+                'Bronchial Asthma',
+                'Hypertension',
+                'Migraine',
+                'Cervical spondylosis',
+                'Paralysis (brain hemorrhage)',
+                'Jaundice',
+                'Malaria',
+                'Chicken pox',
+                'Dengue',
+                'Typhoid',
+                'hepatitis A',
+                'Hepatitis B',
+                'Hepatitis C',
+                'Hepatitis D',
+                'Hepatitis E',
+                'Alcoholic hepatitis',
+                'Tuberculosis',
+                'Common Cold',
+                'Pneumonia',
+                'Dimorphic hemmorhoids(piles)',
+                'Heart attack',
+                'Varicose veins',
+                'Hypothyroidism',
+                'Hyperthyroidism',
+                'Hypoglycemia',
+                'Osteoarthristis',
+                'Arthritis',
+                '(vertigo) Paroymsal  Positional Vertigo',
+                'Acne',
+                'Urinary tract infection',
+                'Psoriasis',
+                'Impetigo'
+            ],
+            'widget': 'multiselect'
+        }
+    }
+    specialities = JSONField(schema=SPECIALITIES_SCHEMA, null=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'

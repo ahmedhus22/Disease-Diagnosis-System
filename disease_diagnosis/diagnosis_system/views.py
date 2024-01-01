@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Disease, Symptom, Specialist
 from django.views.generic import CreateView
 from .forms import SymptomChoicesForm
-from .diagnosis_prediction import predict_diagnosis
+from .diagnosis_prediction import predict_diagnosis, disease_description
 from users.models import Profile
 
 
@@ -19,6 +19,8 @@ def diagnosis_predict(request):
             symptoms_list = symptoms.split(', ')
 
             diagnosis, additional_message = predict_diagnosis(symptoms_list)
+            description = disease_description(diagnosis)
+            
             DOCTOR = 2
             doctors = Profile.objects.filter(user_type=DOCTOR)
             specialists__id = []
@@ -34,7 +36,8 @@ def diagnosis_predict(request):
                 'diagnosis': diagnosis,
                 'symptoms_list': symptoms_list,
                 'additional_message': additional_message,
-                'recommended_doctors': recommended_doctors
+                'recommended_doctors': recommended_doctors,
+                'description': description
             }
             return render(request, 'diagnosis_system/diagnosis.html', context=context)
 

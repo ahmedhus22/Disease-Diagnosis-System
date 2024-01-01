@@ -130,5 +130,9 @@ def predict_diagnosis(x):
     return model.predict(x)[0], additional_message
 
 
+def disease_description(disease):
+    df_d = pd.read_csv(Path(BASE_DIR, 'diagnosis_system', 'dataset', 'symptom_Description.csv'))
+    return df_d[df_d['Disease'] == disease]['Description'].values[0]
+
 if __name__ == '__main__':
     main()

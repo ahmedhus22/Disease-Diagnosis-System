@@ -134,5 +134,10 @@ def disease_description(disease):
     df_d = pd.read_csv(Path(BASE_DIR, 'diagnosis_system', 'dataset', 'symptom_Description.csv'))
     return df_d[df_d['Disease'] == disease]['Description'].values[0]
 
+
+def disease_precaution(disease):
+    df_p = pd.read_csv(Path(BASE_DIR, 'diagnosis_system', 'dataset', 'symptom_precaution.csv'))
+    return df_p[df_p['Disease'] == disease].values[0][1:]
+
 if __name__ == '__main__':
     main()

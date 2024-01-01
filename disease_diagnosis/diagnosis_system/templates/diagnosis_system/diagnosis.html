@@ -9,6 +9,13 @@
                 <p class="article-content">{{ description }}</p>
                 <p class="text-muted">{{ additional_message }}</p>
 
+                <h2>Precautions:</h2>
+                <ul>
+                {% for precaution in precautions %}
+                    <li>{{ precaution }}</li>
+                {% endfor %}
+                </ul>
+
         </div>
     </article>
     {% for doctor in recommended_doctors %}

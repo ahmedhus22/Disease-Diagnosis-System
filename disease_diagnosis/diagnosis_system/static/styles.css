@@ -19,3 +19,21 @@ body {
   color: #333333;
   margin-top: 5rem;
 }
+
+.article-title {
+  color: #444444;
+}
+
+a.article-title:hover {
+  color: #428bca;
+  text-decoration: none;
+}
+
+.article-content {
+  white-space: pre-line;
+}
+
+.article-metadata a:hover {
+  color: #333;
+  text-decoration: none;
+}

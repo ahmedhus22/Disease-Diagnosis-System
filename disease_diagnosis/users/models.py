@@ -2,11 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 from django_jsonform.models.fields import JSONField
+from django.core.validators import RegexValidator
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     age = models.PositiveSmallIntegerField(null=True)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message='Enter a valid phone number')
+    phone_number = models.CharField(validators=[phone_regex], max_length=15, null=True)
 
     PATIENT = 1
     DOCTOR = 2

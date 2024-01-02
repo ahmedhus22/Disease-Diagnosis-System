@@ -20,6 +20,7 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
+    phone_number = forms.RegexField(regex=r'^\+?1?\d{9,15}$')
     class Meta:
         model = Profile
-        fields = ['image', 'age', 'user_type']
+        fields = ['image', 'age', 'phone_number', 'user_type']

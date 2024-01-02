@@ -4,10 +4,15 @@ from django.views.generic import CreateView
 from .forms import SymptomChoicesForm, PatientUpdateForm
 from .diagnosis_prediction import predict_diagnosis, disease_description, disease_precaution
 from users.models import Profile
+from django.db.models import Count
 
 
 def home(request):
-    return render(request, 'diagnosis_system/home.html')
+    common_disease = Patient.objects.annotate(disease_count=Count('disease')).order_by('-disease_count')[:1][0].disease
+    context = {
+        'common_disease': common_disease
+    }
+    return render(request, 'diagnosis_system/home.html', context=context)
 
 
 def diagnosis_predict(request):

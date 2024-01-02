@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Patient(models.Model):
-    disease = models.CharField(max_length=100)
+    disease = models.CharField(max_length=100, null=True, blank=True)
     patient = models.OneToOneField(User, on_delete=models.CASCADE)
 
     symptom1 = models.CharField(max_length=50, null=True, blank=True)

@@ -72,20 +72,20 @@
                       <a href="{% url 'diagnosis_system-predict' %}">Get Diagnosed</a>
                     </li>
                     <li class="list-group-item list-group-item-light">
-                      <a href="#">Save Your Health conditions</a>
+                      <a href="{% url 'patient-update' %}">Save Your Health conditions</a>
                     </li>
                   </ul>
                 </p>
                 {% endif %}
                 {% if user.is_authenticated and user.profile.user_type == 2 %}
                 <h3>Digital Assistant</h3>
-                <p class='text-muted'>Your Personal Healthcare Assistant
+                <p class='text-muted'>Digital Healthcare System
                   <ul class="list-group">
                     <li class="list-group-item list-group-item-light">
-                      <a href="{% url 'diagnosis_system-predict' %}">Get Diagnosed</a>
+                      <a href="{% url 'diagnosis_system-predict' %}">Test Diagnosis</a>
                     </li>
                     <li class="list-group-item list-group-item-light">
-                      <a href="#">Manage Your Specialities</a>
+                      <a href="{% url 'profile' %}">Add contact details to be verified</a>
                     </li>
                   </ul>
                 </p>

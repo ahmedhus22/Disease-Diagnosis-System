@@ -12,9 +12,14 @@
                 <button class="btn btn-outline-info" type="submit">Diagnose</button>
             </div>
         </form>
-        <div class="border-top pt-3">
+    </div>
+    <div class="content-section">
+        <div class="media-body">
+            <p class="border-bottom mb-4">Not Sure what to type? Here's a list of symptoms you might have</h2>
             <small class="text-muted">
-                Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+                {% for symptom in symptoms_unique %}
+                    <p>{{ symptom }}</p>
+                {% endfor %}
             </small>
         </div>
     </div>

@@ -139,5 +139,12 @@ def disease_precaution(disease):
     df_p = pd.read_csv(Path(BASE_DIR, 'diagnosis_system', 'dataset', 'symptom_precaution.csv'))
     return df_p[df_p['Disease'] == disease].values[0][1:]
 
+
+def symptoms_choices():
+    df_s = pd.read_csv(Path(BASE_DIR, 'diagnosis_system', 'dataset', 'Symptom-severity.csv'))
+    df_s['Symptom'] = df_s['Symptom'].str.replace('_', ' ')
+    return df_s['Symptom'].unique()
+
+
 if __name__ == '__main__':
     main()

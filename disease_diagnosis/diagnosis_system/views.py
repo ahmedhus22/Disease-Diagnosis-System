@@ -2,7 +2,12 @@ from django.shortcuts import render, redirect
 from .models import Patient, Symptom, Specialist
 from django.views.generic import CreateView
 from .forms import SymptomChoicesForm, PatientUpdateForm
-from .diagnosis_prediction import predict_diagnosis, disease_description, disease_precaution
+from .diagnosis_prediction import (
+    predict_diagnosis, 
+    disease_description, 
+    disease_precaution,
+    symptoms_choices
+)
 from users.models import Profile
 from django.db.models import Count
 
@@ -50,8 +55,13 @@ def diagnosis_predict(request):
 
     else:
         form = SymptomChoicesForm()
+        symptoms_unique = symptoms_choices()
+        context = {
+            'form': form,
+            'symptoms_unique': symptoms_unique
+        }
             
-    return render(request, 'diagnosis_system/predict.html', context={'form': form})
+    return render(request, 'diagnosis_system/predict.html', context=context)
 
 def diagnosis(request):
     return render(request, 'diagnosis_system/diagnosis.html')

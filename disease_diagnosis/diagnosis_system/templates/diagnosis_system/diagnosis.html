@@ -4,29 +4,24 @@
 
     <article class="media content-section">
         <div class="media-body">
-            
                 <h1>Diagnosis: {{ diagnosis }}</h1>
                 <p class="article-content">{{ description }}</p>
                 <p class="text-muted">{{ additional_message }}</p>
-
                 <h2>Precautions:</h2>
                 <ul>
                 {% for precaution in precautions %}
                     <li>{{ precaution }}</li>
                 {% endfor %}
                 </ul>
-
         </div>
     </article>
+    <h2 class="media">Recommended Doctors: </h2>
     {% for doctor in recommended_doctors %}
         <article class="media content-section">
+            <img class="rounded-circle article-img"  src="{{ doctor.user.profile.image.url }}">
             <div class="media-body">
-                <div class="article-metadata">
-                <a class="mr-2" href="{% url 'profile-detail' doctor.id %}">{{ doctor.user.username }}</a>
-                <small class="text-muted"></small>
-                </div>
-                <h2><a class="article-title" href="#"></a></h2>
-                <p class="article-content"></p>
+                <h2><a class="article-title" href="{% url 'profile-detail' doctor.id %}">{{ doctor.user.username }}</a></h2>
+                <p class="article-content">Contact: {{ doctor.user.profile.phone_number }}</p>
             </div>
         </article>
     {% endfor %}

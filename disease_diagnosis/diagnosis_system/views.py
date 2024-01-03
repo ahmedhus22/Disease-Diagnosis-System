@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Patient, Symptom, Specialist
 from django.views.generic import CreateView
+from django.contrib.auth.decorators import login_required
 from .forms import SymptomChoicesForm, PatientUpdateForm
 from .diagnosis_prediction import (
     predict_diagnosis, 
@@ -20,6 +21,7 @@ def home(request):
     return render(request, 'diagnosis_system/home.html', context=context)
 
 
+@login_required
 def diagnosis_predict(request):
     if request.method == 'POST':
         form = SymptomChoicesForm(request.POST)
@@ -63,10 +65,13 @@ def diagnosis_predict(request):
             
     return render(request, 'diagnosis_system/predict.html', context=context)
 
+
+@login_required
 def diagnosis(request):
     return render(request, 'diagnosis_system/diagnosis.html')
 
 
+@login_required
 def patient_update(request):
     if request.method == 'POST':
         form = PatientUpdateForm(request.POST , request.FILES, instance=request.user.patient)

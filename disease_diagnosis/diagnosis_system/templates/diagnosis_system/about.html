@@ -1,0 +1,23 @@
+{% extends "diagnosis_system/base.html" %}
+{% block content %}
+    <h1>Disease Diagnosis System</h1>
+    <p class="lead">
+        Patients can register and enter their symptoms to get a possible diagnosis.
+        And also get recommended a doctor based on their diagnosis.
+        Doctors can register and enter their contact details and when verified by admin
+        they will be recommended to patients.
+    </p>
+    <p class="lead">
+        Patients can also save their health details which can help increase the dataset 
+        to help better predictions in the future.
+    </p>
+    <p class="lead">
+        Naive Bayes classifier is used to predict diagnosis.
+        The Model has a cross val accuracy of around 95%
+    </p>
+    <h3>Credits</h3>
+        <ul class="lead">
+            <li>Dataset: <a href="https://www.kaggle.com/datasets/itachi9604/disease-symptom-description-dataset">From Kaggle</a></li>
+            <li>CSS Styles: <a href="https://www.youtube.com/@coreyms">CoreyMSchafer Youtube</a></li>
+        </ul>
+{% endblock content %}

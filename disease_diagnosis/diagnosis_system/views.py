@@ -21,6 +21,9 @@ def home(request):
     return render(request, 'diagnosis_system/home.html', context=context)
 
 
+def about(request):
+    return render(request, 'diagnosis_system/about.html')
+
 @login_required
 def diagnosis_predict(request):
     if request.method == 'POST':

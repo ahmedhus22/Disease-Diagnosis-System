@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Patient
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import SymptomChoicesForm, PatientUpdateForm
 from .diagnosis_prediction import (
     predict_diagnosis, 
@@ -79,7 +80,7 @@ def patient_update(request):
         form = PatientUpdateForm(request.POST , request.FILES, instance=request.user.patient)
         if form.is_valid:
             form.save()
-            # messages.success(request, f'Your Account has been updated!')
+            messages.success(request, f'Your Health Details has been updated!')
             return redirect('patient-update')
         
     else:

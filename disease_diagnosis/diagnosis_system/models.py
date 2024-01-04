@@ -16,11 +16,6 @@ class Patient(models.Model):
         return self.patient.username
 
 
-class Symptom(models.Model):
-    disease = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    symptom = models.CharField(max_length=50)
-
-
 class Specialist(models.Model):
     DISEASES_CHOICES = [
         ('Fu', 'Fungal infection'),
@@ -68,8 +63,3 @@ class Specialist(models.Model):
     speciality = models.CharField(max_length=10, choices=DISEASES_CHOICES)
     specialist = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0, editable=False)
-
-'''
-class SymptomChoices(models.Model):
-    symptom_choice = models.ForeignKey(Symptom, on_delete=models.SET_NULL, null=True)
-'''

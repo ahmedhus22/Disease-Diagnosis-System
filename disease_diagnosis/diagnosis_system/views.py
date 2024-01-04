@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Patient, Symptom, Specialist
-from django.views.generic import CreateView
+from .models import Patient
 from django.contrib.auth.decorators import login_required
 from .forms import SymptomChoicesForm, PatientUpdateForm
 from .diagnosis_prediction import (

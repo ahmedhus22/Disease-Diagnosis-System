@@ -1,6 +1,6 @@
 from django import forms
-from .models import Patient, Symptom
-# from .models import SymptomChoices
+from .models import Patient
+
 
 class SymptomForm(forms.Form):
     SYMPTOM_CHOICES_1 = [

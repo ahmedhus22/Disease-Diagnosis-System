@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import sys
 import os.path
 from pathlib import Path
@@ -127,7 +128,7 @@ def predict_diagnosis(x):
         weight = df_s['weight'][i]
         x = x.replace(symptoms[i], weight)
     x = x.values.reshape(1, -1)
-    return model.predict(x)[0], additional_message
+    return model.predict(x)[0], np.max(model.predict_proba(x)), additional_message
 
 
 def disease_description(disease):

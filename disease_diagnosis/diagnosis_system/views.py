@@ -33,7 +33,7 @@ def diagnosis_predict(request):
             symptoms = cd.get('symptoms')
             symptoms_list = symptoms.split(', ')
 
-            diagnosis, additional_message = predict_diagnosis(symptoms_list)
+            diagnosis, confidence, additional_message = predict_diagnosis(symptoms_list)
             description = disease_description(diagnosis)
             precautions = disease_precaution(diagnosis)
 
@@ -50,6 +50,7 @@ def diagnosis_predict(request):
             
             context = {
                 'diagnosis': diagnosis,
+                'confidence': confidence,
                 'symptoms_list': symptoms_list,
                 'additional_message': additional_message,
                 'recommended_doctors': recommended_doctors,

@@ -4,6 +4,7 @@
 
     <article class="media content-section">
         <div class="media-body">
+            {% if show_diagnosis %}
                 <h1>Diagnosis: {{ diagnosis }}</h1>
                 <p class="text-muted">Confidence: {{ confidence }}</p>
                 <p class="article-content">{{ description }}</p>
@@ -14,16 +15,22 @@
                     <li>{{ precaution }}</li>
                 {% endfor %}
                 </ul>
+            {% else %}
+                <h1>Failed to get accurate diagnosis</h1>
+                <p class="article-content">Check your input and try to enter more symptoms</p>
+            {% endif %}
         </div>
     </article>
-    <h2 class="media">Recommended Doctors: </h2>
-    {% for doctor in recommended_doctors %}
-        <article class="media content-section">
-            <img class="rounded-circle article-img"  src="{{ doctor.user.profile.image.url }}">
-            <div class="media-body">
-                <h2><a class="article-title" href="{% url 'profile-detail' doctor.id %}">{{ doctor.user.username }}</a></h2>
-                <p class="article-content">Contact: {{ doctor.user.profile.phone_number }}</p>
-            </div>
-        </article>
-    {% endfor %}
+    {% if show_diagnosis %}
+        <h2 class="media">Recommended Doctors: </h2>
+        {% for doctor in recommended_doctors %}
+            <article class="media content-section">
+                <img class="rounded-circle article-img"  src="{{ doctor.user.profile.image.url }}">
+                <div class="media-body">
+                    <h2><a class="article-title" href="{% url 'profile-detail' doctor.id %}">{{ doctor.user.username }}</a></h2>
+                    <p class="article-content">Contact: {{ doctor.user.profile.phone_number }}</p>
+                </div>
+            </article>
+        {% endfor %}
+    {% endif %}
 {% endblock content %}

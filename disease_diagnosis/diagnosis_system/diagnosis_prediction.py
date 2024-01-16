@@ -128,7 +128,11 @@ def predict_diagnosis(x):
         weight = df_s['weight'][i]
         x = x.replace(symptoms[i], weight)
     x = x.values.reshape(1, -1)
-    return model.predict(x)[0], np.max(model.predict_proba(x)), additional_message
+
+    proba = np.max(model.predict_proba(x))
+    acceptable = (proba > 0.9)
+
+    return model.predict(x)[0], proba, acceptable, additional_message
 
 
 def disease_description(disease):

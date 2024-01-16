@@ -65,20 +65,20 @@ def load_data(directory):
 
     df = df.fillna(0)
 
-    # read Symptom-severity
-    df_s = pd.read_csv(directory + os.path.sep + 'Symptom-severity.csv')
+    # read Symptom-encoding
+    df_s = pd.read_csv(directory + os.path.sep + 'Symptom-encoding.csv')
     df_s['Symptom'] = df_s['Symptom'].str.replace('_', ' ')
 
-    # replace symptom name with severity
+    # replace symptom name with encoding
     symptoms = df_s['Symptom']
     for i in range(len(symptoms)):
         weight = df_s['weight'][i]
         df = df.replace(symptoms[i], weight)
 
-    # replace 0 for values not in Symptom-severity(unknown severity)
-    df = df.replace('dischromic  patches', 0)
-    df = df.replace('spotting  urination', 0)
-    df = df.replace('foul smell of urine', 0)
+    # replace 0 for values not in Symptom-encoding(unknown severity)
+    #df = df.replace('dischromic  patches', 0)
+    #df = df.replace('spotting  urination', 0)
+    #df = df.replace('foul smell of urine', 0)
 
     evidence = df.iloc[:,1:].values
     labels = df['Disease'].values
@@ -115,8 +115,8 @@ def predict_diagnosis(x):
     x = pd.Series(x_vector)
     x = x.fillna(0)
 
-    # read Symptom-severity
-    df_s = pd.read_csv(Path(BASE_DIR, 'diagnosis_system', 'dataset', 'Symptom-severity.csv'))
+    # read Symptom-encoding
+    df_s = pd.read_csv(Path(BASE_DIR, 'diagnosis_system', 'dataset', 'Symptom-encoding.csv'))
     df_s['Symptom'] = df_s['Symptom'].str.replace('_', ' ')
     symptoms_list = df_s['Symptom'].unique()
     for i in range(len(x)):
@@ -142,7 +142,7 @@ def disease_precaution(disease):
 
 
 def symptoms_choices():
-    df_s = pd.read_csv(Path(BASE_DIR, 'diagnosis_system', 'dataset', 'Symptom-severity.csv'))
+    df_s = pd.read_csv(Path(BASE_DIR, 'diagnosis_system', 'dataset', 'Symptom-encoding.csv'))
     df_s['Symptom'] = df_s['Symptom'].str.replace('_', ' ')
     return df_s['Symptom'].unique()
 
